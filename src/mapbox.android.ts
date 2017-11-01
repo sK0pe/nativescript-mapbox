@@ -331,7 +331,7 @@ const _addMarkers = (markers, nativeMap?) => {
   });
 };
 
-const _removeMarkers = (ids, nativeMap?) => {
+const _removeMarkers = (ids?, nativeMap?) => {
   const theMap = nativeMap || _mapbox;
   if (!theMap || !theMap.mapboxMap) {
     return;
@@ -344,6 +344,15 @@ const _removeMarkers = (ids, nativeMap?) => {
         theMap.mapboxMap.removeAnnotation(marker.android);
       }
     }
+  }
+  // remove markers from cache
+  if(ids){
+      _markers = _markers.filter((marker) => {
+          return ids.indexOf(marker.id) < 0;
+      });
+  }
+  else{
+      _markers = [];
   }
 };
 
